@@ -39,6 +39,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _atom = <AtomItem>[];
   final _rss = <RssItem>[];
+  final _translatedTitles = <String>[];
+
   void fetchFeed() async {
     final response =
         await http.get(Uri.parse('https://news.ycombinator.com/rss'));
@@ -47,10 +49,27 @@ class _MyHomePageState extends State<MyHomePage> {
       throw Exception('Failed to fetch atom.xml');
     }
     final rssFeed = RssFeed.parse(utf8.decode(response.bodyBytes));
-    //  final atomFeed = AtomFeed.parse(utf8.decode(response.bodyBytes));
+
+    // タイトルを最大100件に制限
+    final limitedItems = rssFeed.items!.take(1).toList();
+
+    final translator = GoogleTranslator();
+
+    // 翻訳されたタイトルを格納するリスト
+    final List<String> translatedTitles = [];
+
+    for (final item in limitedItems) {
+      final translatedTitle = await translator.translate(
+        item.title!,
+        from: 'en',
+        to: 'ja',
+      );
+      translatedTitles.add(translatedTitle.text);
+    }
+
     setState(() {
-      //  atomFeed.items!.forEach((item) => {_atom.add(item)});
-      rssFeed.items!.forEach((item) => {_rss.add(item)});
+      _rss.addAll(limitedItems);
+      _translatedTitles.addAll(translatedTitles);
     });
   }
 
@@ -76,16 +95,10 @@ class _MyHomePageState extends State<MyHomePage> {
         itemCount: _rss.length,
         itemBuilder: (context, index) {
           final title = _rss[index].title.toString();
-          final translateTitle = GoogleTranslator()
-              .translate(
-                title,
-                from: 'en',
-                to: 'ja',
-              )
-              .then((value) => print(value.text));
+          final translatedTitle = _translatedTitles[index];
 
           return ListTile(
-            title: Text(_rss[index].title.toString()),
+            title: Text(translatedTitle),
             onTap: () => {_launchUrl(_rss[index].link.toString())},
           );
         },
