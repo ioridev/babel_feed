@@ -13,10 +13,8 @@ dependencies:
   http: ^0.13.5
   webfeed: ^0.7.0
   url_launcher: ^6.1.10
-
-
-
   cupertino_icons: ^1.0.2
+  translator: ^0.1.7
 
 dev_dependencies:
   flutter_test:

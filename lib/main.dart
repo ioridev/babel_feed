@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:translator/translator.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webfeed/webfeed.dart';
 
@@ -74,6 +75,15 @@ class _MyHomePageState extends State<MyHomePage> {
       body: ListView.builder(
         itemCount: _rss.length,
         itemBuilder: (context, index) {
+          final title = _rss[index].title.toString();
+          final translateTitle = GoogleTranslator()
+              .translate(
+                title,
+                from: 'en',
+                to: 'ja',
+              )
+              .then((value) => print(value.text));
+
           return ListTile(
             title: Text(_rss[index].title.toString()),
             onTap: () => {_launchUrl(_rss[index].link.toString())},
