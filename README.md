@@ -1,16 +1,6 @@
 # babel_feed
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
+翻訳機能付きのRSSリーダー
+iOSとAndroidで動作します。
+ML Kit のオンデバイス翻訳 API を使用すると、50 を超える言語間でテキストを動的に翻訳できます。
 samples, guidance on mobile development, and a full API reference.
