@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webfeed/webfeed.dart';
 
+import '../helper.dart';
+
 class FeedPage extends StatefulWidget {
   const FeedPage({super.key, required this.title});
 
@@ -47,7 +49,9 @@ class _FeedPageState extends State<FeedPage> {
 
     if (!await modelManager
         .isModelDownloaded(TranslateLanguage.english.bcpCode)) {
+      await showProgress('Downloading translation model...');
       await modelManager.downloadModel(TranslateLanguage.english.bcpCode);
+      await hideProgress();
     }
 
     // 翻訳モデルをダウンロードした後、各タイトルを翻訳
