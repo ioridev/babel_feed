@@ -20,7 +20,7 @@ class _FeedPageState extends State<FeedPage> {
   final _rss = <RssItem>[];
   final _translatedTitles = <String>[];
 
-  void fetchFeed() async {
+  Future<void> fetchFeed() async {
     final response =
         await http.get(Uri.parse('https://news.ycombinator.com/rss'));
 
@@ -33,13 +33,15 @@ class _FeedPageState extends State<FeedPage> {
     final limitedItems = rssFeed.items!.take(100).toList();
 
     // 翻訳されたタイトルを格納するリスト
-    final List<String> translatedTitles = [];
+    final translatedTitles = <String>[];
 
-    const TranslateLanguage sourceLanguage = TranslateLanguage.english;
-    const TranslateLanguage targetLanguage = TranslateLanguage.japanese;
+    const sourceLanguage = TranslateLanguage.english;
+    const targetLanguage = TranslateLanguage.japanese;
 
     final onDeviceTranslator = OnDeviceTranslator(
-        sourceLanguage: sourceLanguage, targetLanguage: targetLanguage);
+      sourceLanguage: sourceLanguage,
+      targetLanguage: targetLanguage,
+    );
 
     final modelManager = OnDeviceTranslatorModelManager();
 
@@ -61,7 +63,7 @@ class _FeedPageState extends State<FeedPage> {
       _translatedTitles.addAll(translatedTitles);
     });
 
-    onDeviceTranslator.close();
+    await onDeviceTranslator.close();
   }
 
   Future<void> _launchUrl(String url) async {
