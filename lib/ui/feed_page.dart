@@ -71,8 +71,12 @@ class _FeedPageState extends State<FeedPage> {
   }
 
   Future<void> _launchUrl(String url) async {
-    if (!await launchUrl(Uri.parse(url))) {
-      throw Exception('Could not launch $url');
+    // url の 先頭に http://translate.google.com/translate?langpair=en%7Cja&hl=en&u= を追加
+    final translateUrl =
+        'http://translate.google.com/translate?langpair=en%7Cja&hl=en&u=$url';
+    debugPrint(translateUrl);
+    if (!await launchUrl(Uri.parse(translateUrl))) {
+      throw Exception('Could not launch $translateUrl');
     }
   }
 
