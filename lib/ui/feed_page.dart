@@ -32,7 +32,7 @@ class _FeedPageState extends State<FeedPage> {
     final rssFeed = RssFeed.parse(utf8.decode(response.bodyBytes));
 
     // タイトルを最大100件に制限
-    final limitedItems = rssFeed.items!.take(100).toList();
+    final limitedItems = rssFeed.items!.take(200).toList();
 
     // 翻訳されたタイトルを格納するリスト
     final translatedTitles = <String>[];
