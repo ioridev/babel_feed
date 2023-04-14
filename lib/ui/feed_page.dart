@@ -9,9 +9,9 @@ import 'package:webfeed/webfeed.dart';
 import '../helper.dart';
 
 class FeedPage extends StatefulWidget {
-  const FeedPage({super.key, required this.title});
+  const FeedPage({super.key, required this.url});
 
-  final String title;
+  final String url;
 
   @override
   State<FeedPage> createState() => _FeedPageState();
@@ -23,8 +23,7 @@ class _FeedPageState extends State<FeedPage> {
   final _translatedTitles = <String>[];
 
   Future<void> fetchFeed() async {
-    final response =
-        await http.get(Uri.parse('https://news.ycombinator.com/rss'));
+    final response = await http.get(Uri.parse(widget.url));
 
     if (response.statusCode != 200) {
       throw Exception('Failed to fetch atom.xml');

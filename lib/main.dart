@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: const FeedPage(title: 'Flutter Demo Home Page'),
+      home: const FeedPage(url: 'https://news.ycombinator.com/rss'),
     );
   }
 }
